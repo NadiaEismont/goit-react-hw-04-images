@@ -5,7 +5,7 @@ import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 
 const ImageGallery = ({ images }) => (
   <>
-    <ul class="gallery">
+    <ul className="ImageGallery">
       {images.map(({ largeImageURL, webformatURL, id }) => (
         <ImageGalleryItem
           value={id}

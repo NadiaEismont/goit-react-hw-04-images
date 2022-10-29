@@ -1,33 +1,40 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Modal from './Modal/Modal';
 import Searchbar from './Searchbar/Searchbar';
+import { fetchImages } from '../api';
 import ImageGallery from './ImageGallery/ImageGallery';
 
-axios.defaults.baseURL = 'https://pixabay.com/api/';
 // axios.defaults.headers.common['x-api-key'] = process.env.REACT_APP_API_KEY;
 export class App extends Component {
   state = {
     images: [],
+    error: null,
   };
 
   async componentDidMount() {
     try {
-      const response = await axios.get(
-        '/?q=cat&page=1&key=25251532-72426a9e0e55162032e249781&image_type=photo&orientation=horizontal&per_page=12'
-      );
-      console.log(response);
-      const photos = response.data.hits;
+      const photos = await fetchImages('');
       this.setState({ images: photos });
     } catch (error) {}
   }
 
+  handleSubmit = async evt => {
+    evt.preventDefault();
+    const form = evt.currentTarget;
+    const input = form.elements.search.value;
+    try {
+      const photos = await fetchImages(input);
+      this.setState({ images: photos });
+    } catch (error) {}
+    form.reset();
+  };
+
   render() {
-    const options = this.state.images.map(image => ({
-      value: image.id,
-      largeImageURL: image.largeImageURL,
-      webformatURL: image.webformatURL,
-    }));
+    // const options = this.state.images.map(image => ({
+    //   value: image.id,
+    //   largeImageURL: image.largeImageURL,
+    //   webformatURL: image.webformatURL,
+    // }));
     return (
       <div
         style={{
@@ -39,8 +46,8 @@ export class App extends Component {
           color: '#010101',
         }}
       >
-        <Searchbar onSubmit></Searchbar>
-        <ImageGallery />
+        <Searchbar onSubmit={this.handleSubmit}></Searchbar>
+        <ImageGallery images={this.state.images} />
         {/* <Modal /> */}
       </div>
     );

@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import '../../styles.css';
 import PropTypes from 'prop-types';
-const ImageGalleryItem = ({ largeImageURL, webformatURL, id }) => (
-  <li class="gallery-item">
+const ImageGalleryItem = ({ largeImageURL, webformatURL, value }) => (
+  <li className="ImageGalleryItem">
     <img src="" alt="" />
   </li>
 );

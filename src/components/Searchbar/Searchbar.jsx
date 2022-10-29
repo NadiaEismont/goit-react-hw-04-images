@@ -4,17 +4,18 @@ import PropTypes from 'prop-types';
 
 const Searchbar = ({ onSubmit }) => (
   <>
-    <header class="searchbar">
-      <form class="form">
-        <button type="submit" class="button" onSubmit={onSubmit}>
-          <span class="button-label">Search</span>
+    <header className="searchbar">
+      <form className="form" onSubmit={onSubmit}>
+        <button type="submit" className="button">
+          <span className="button-label">Search</span>
         </button>
 
         <input
-          class="input"
+          className="input"
           type="text"
-          autocomplete="off"
-          autofocus
+          name="search"
+          autoComplete="off"
+          autoFocus
           placeholder="Search images and photos"
         />
       </form>
