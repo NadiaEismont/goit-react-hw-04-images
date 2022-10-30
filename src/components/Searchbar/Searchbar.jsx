@@ -1,17 +1,17 @@
 import { Component } from 'react';
 import '../../styles.css';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const Searchbar = ({ onSubmit }) => (
   <>
-    <header className="searchbar">
-      <form className="form" onSubmit={onSubmit}>
-        <button type="submit" className="button">
+    <header className="Searchbar">
+      <form className="SearchForm" onSubmit={onSubmit}>
+        <button type="submit" className="SearchForm-button">
           <span className="button-label">Search</span>
         </button>
 
         <input
-          className="input"
+          className="SearchForm-input"
           type="text"
           name="search"
           autoComplete="off"
