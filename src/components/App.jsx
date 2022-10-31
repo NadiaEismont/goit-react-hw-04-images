@@ -43,18 +43,23 @@ export class App extends Component {
   selectImage = (image, alt) => {
     this.setState({ image, alt });
   };
-
+  onClose = () => {
+    this.setState({ image: null });
+  };
   render() {
     const { isLoading, images, image, alt } = this.state;
     return (
       <div className="App">
         <Searchbar onSubmit={this.handleSubmit}></Searchbar>
         {isLoading && <Loader />}
+
         {images && !isLoading && (
           <ImageGallery images={images} selectImage={this.selectImage} />
         )}
 
-        {image && !isLoading && <Modal img={image} alt={alt} onClose />}
+        {image && !isLoading && (
+          <Modal img={image} alt={alt} onClose={this.onClose} />
+        )}
       </div>
     );
   }

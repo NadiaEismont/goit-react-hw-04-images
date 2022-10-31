@@ -4,13 +4,16 @@ import HashLoader from 'react-spinners/HashLoader';
 
 const Loader = () => {
   return (
-    <HashLoader
-      color="olive"
-      loading={true}
-      size={50}
-      aria-label="Loading Spinner"
-      data-testid="loader"
-    />
+    <div className="Spinner">
+      <HashLoader
+        color="#3f51b5;"
+        loading={true}
+        size={50}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+        className="Spinner"
+      />
+    </div>
   );
 };
 export default Loader;
