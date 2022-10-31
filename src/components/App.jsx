@@ -14,30 +14,42 @@ export class App extends Component {
     alt: null,
     error: null,
     isLoading: false,
+    page: 1,
+    search: '',
   };
 
   async componentDidMount() {
-    try {
-      const photos = await fetchImages('');
-      this.setState({ images: photos });
-    } catch (error) {
-      this.setState({ error: 'Сталась помилка. Перезавантажте сторінку' });
+    this.setState({ search: '', page: 1 });
+  }
+
+  async componentDidUpdate(_, prevState) {
+    if (
+      prevState.page !== this.state.page ||
+      prevState.search !== this.state.search
+    ) {
+      try {
+        this.setState({ isLoading: true });
+        const photos = await fetchImages(this.state.search, this.state.page);
+        this.setState(prevState => ({
+          images: [...prevState.images, ...photos],
+        }));
+      } catch (error) {
+        this.setState({ error: 'Сталась помилка. Перезавантажте сторінку' });
+      } finally {
+        this.setState({ isLoading: false });
+      }
     }
   }
+
+  loadMore = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+  };
 
   handleSubmit = async evt => {
     evt.preventDefault();
     const form = evt.currentTarget;
     const input = form.elements.search.value;
-    try {
-      this.setState({ isLoading: true });
-      const photos = await fetchImages(input);
-      this.setState({ images: photos });
-    } catch (error) {
-      this.setState({ error: 'Сталась помилка. Перезавантажте сторінку' });
-    } finally {
-      this.setState({ isLoading: false });
-    }
+    this.setState({ search: input, page: 1, images: [] });
     form.reset();
   };
   selectImage = (image, alt) => {
@@ -60,6 +72,9 @@ export class App extends Component {
         {image && !isLoading && (
           <Modal img={image} alt={alt} onClose={this.onClose} />
         )}
+        <button type="submit" className="Button" onClick={this.loadMore}>
+          Load more
+        </button>
       </div>
     );
   }
