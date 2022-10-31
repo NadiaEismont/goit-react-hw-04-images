@@ -4,7 +4,7 @@ import Searchbar from './Searchbar/Searchbar';
 import { fetchImages } from '../api';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
-
+import Button from './Button/Button';
 export class App extends Component {
   state = {
     images: [],
@@ -70,9 +70,9 @@ export class App extends Component {
         {image && !isLoading && (
           <Modal img={image} alt={alt} onClose={this.onClose} />
         )}
-        <button type="submit" className="Button" onClick={this.loadMore}>
-          Load more
-        </button>
+        {images.length !== 0 && !isLoading && (
+          <Button onClick={this.loadMore} />
+        )}
       </div>
     );
   }
