@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { useState, CSSProperties } from 'react';
+import React from 'react';
 import HashLoader from 'react-spinners/HashLoader';
 
 const Loader = () => {
@@ -16,4 +15,5 @@ const Loader = () => {
     </div>
   );
 };
+
 export default Loader;

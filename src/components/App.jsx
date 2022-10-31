@@ -3,10 +3,8 @@ import Modal from './Modal/Modal';
 import Searchbar from './Searchbar/Searchbar';
 import { fetchImages } from '../api';
 import ImageGallery from './ImageGallery/ImageGallery';
-import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Loader from './Loader/Loader';
 
-// axios.defaults.headers.common['x-api-key'] = process.env.REACT_APP_API_KEY;
 export class App extends Component {
   state = {
     images: [],
