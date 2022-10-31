@@ -76,7 +76,7 @@ img {
   width: 48px;
   height: 48px;
   border: 0;
-  background-image: url('https://image.flaticon.com/icons/svg/149/149852.svg');
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/67/Antu_edit-find-mail.svg');
   background-size: 40%;
   background-repeat: no-repeat;
   background-position: center;
@@ -178,7 +178,7 @@ img {
 }
 
 /*
-* Стили компонента Buton (Load more)
+* Стили компонента Button (Load more)
 */
 .Button {
   padding: 8px 16px;

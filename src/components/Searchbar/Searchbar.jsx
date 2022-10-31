@@ -1,13 +1,13 @@
 import { Component } from 'react';
 import '../../styles.css';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 const Searchbar = ({ onSubmit }) => (
   <>
     <header className="Searchbar">
       <form className="SearchForm" onSubmit={onSubmit}>
         <button type="submit" className="SearchForm-button">
-          <span className="button-label">Search</span>
+          <span className="SearchForm-button-label"></span>
         </button>
 
         <input
@@ -22,4 +22,9 @@ const Searchbar = ({ onSubmit }) => (
     </header>
   </>
 );
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
 export default Searchbar;
