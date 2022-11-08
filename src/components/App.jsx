@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from './Modal/Modal';
 import Searchbar from './Searchbar/Searchbar';
 import { fetchImages } from '../api';
