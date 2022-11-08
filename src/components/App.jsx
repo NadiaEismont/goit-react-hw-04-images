@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Modal from './Modal/Modal';
 import Searchbar from './Searchbar/Searchbar';
 import { fetchImages } from '../api';
@@ -18,10 +18,12 @@ export function App() {
     const controller = new AbortController();
     async function fetchData() {
       try {
+        setError(null);
         setIsLoading(true);
         const photos = await fetchImages(search, page, controller);
-        setImages([...images, ...photos]);
-      } catch (error) {
+        setImages(images => [...images, ...photos]);
+      } catch (e) {
+        console.log(e);
         setError('Сталась помилка. Перезавантажте сторінку');
       } finally {
         setIsLoading(false);
@@ -62,7 +64,7 @@ export function App() {
       {images && !isLoading && (
         <ImageGallery images={images} selectImage={selectImage} />
       )}
-
+      {error && <div>{error}</div>}
       {image && !isLoading && <Modal img={image} alt={alt} onClose={onClose} />}
       {images.length !== 0 && !isLoading && <Button onClick={loadMore} />}
     </div>
