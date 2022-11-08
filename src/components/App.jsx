@@ -1,24 +1,18 @@
-import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from './Modal/Modal';
 import Searchbar from './Searchbar/Searchbar';
 import { fetchImages } from '../api';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 import Button from './Button/Button';
-export class App extends Component {
-  state = {
-    images: [],
-    image: null,
-    alt: null,
-    error: null,
-    isLoading: false,
-    page: 1,
-    search: '',
-  };
-
-  async componentDidMount() {
-    this.setState({ search: '', page: 1 });
-  }
+export function App() {
+  const [images, setImages] = useState([]);
+  const [image, setImage] = useState(null);
+  const [alt, setAlt] = useState(null);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState('');
 
   async componentDidUpdate(_, prevState) {
     if (
