@@ -14,16 +14,19 @@ export function App() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
 
-  useEffect(async () => {
-    try {
-      setIsLoading(true);
-      const photos = await fetchImages(search, page);
-      setImages([...images, ...photos]);
-    } catch (error) {
-      setError('Сталась помилка. Перезавантажте сторінку');
-    } finally {
-      setIsLoading(false);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const photos = await fetchImages(search, page);
+        setImages([...images, ...photos]);
+      } catch (error) {
+        setError('Сталась помилка. Перезавантажте сторінку');
+      } finally {
+        setIsLoading(false);
+      }
     }
+    fetchData();
   }, [page, search]);
 
   const loadMore = () => {
@@ -34,11 +37,14 @@ export function App() {
     evt.preventDefault();
     const form = evt.currentTarget;
     const input = form.elements.search.value;
-    setSearch(input), setPage(1), setImages([]);
+    setSearch(input);
+    setPage(1);
+    setImages([]);
     form.reset();
   };
   const selectImage = (image, alt) => {
-    setImage(image), setAlt(alt);
+    setImage(image);
+    setAlt(alt);
   };
   const onClose = () => {
     setImage(null);
