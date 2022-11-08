@@ -14,60 +14,47 @@ export function App() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
 
-  async componentDidUpdate(_, prevState) {
-    if (
-      prevState.page !== this.state.page ||
-      prevState.search !== this.state.search
-    ) {
-      try {
-        this.setState({ isLoading: true });
-        const photos = await fetchImages(this.state.search, this.state.page);
-        this.setState(prevState => ({
-          images: [...prevState.images, ...photos],
-        }));
-      } catch (error) {
-        this.setState({ error: 'Сталась помилка. Перезавантажте сторінку' });
-      } finally {
-        this.setState({ isLoading: false });
-      }
+  useEffect(async () => {
+    try {
+      setIsLoading(true);
+      const photos = await fetchImages(search, page);
+      setImages([...images, ...photos]);
+    } catch (error) {
+      setError('Сталась помилка. Перезавантажте сторінку');
+    } finally {
+      setIsLoading(false);
     }
-  }
+  }, [page, search]);
 
-  loadMore = () => {
-    this.setState(prevState => ({ page: prevState.page + 1 }));
+  const loadMore = () => {
+    setPage(page + 1);
   };
 
-  handleSubmit = async evt => {
+  const handleSubmit = async evt => {
     evt.preventDefault();
     const form = evt.currentTarget;
     const input = form.elements.search.value;
-    this.setState({ search: input, page: 1, images: [] });
+    setSearch(input), setPage(1), setImages([]);
     form.reset();
   };
-  selectImage = (image, alt) => {
-    this.setState({ image, alt });
+  const selectImage = (image, alt) => {
+    setImage(image), setAlt(alt);
   };
-  onClose = () => {
-    this.setState({ image: null });
+  const onClose = () => {
+    setImage(null);
   };
-  render() {
-    const { isLoading, images, image, alt } = this.state;
-    return (
-      <div className="App">
-        <Searchbar onSubmit={this.handleSubmit}></Searchbar>
-        {isLoading && <Loader />}
 
-        {images && !isLoading && (
-          <ImageGallery images={images} selectImage={this.selectImage} />
-        )}
+  return (
+    <div className="App">
+      <Searchbar onSubmit={handleSubmit}></Searchbar>
+      {isLoading && <Loader />}
 
-        {image && !isLoading && (
-          <Modal img={image} alt={alt} onClose={this.onClose} />
-        )}
-        {images.length !== 0 && !isLoading && (
-          <Button onClick={this.loadMore} />
-        )}
-      </div>
-    );
-  }
+      {images && !isLoading && (
+        <ImageGallery images={images} selectImage={selectImage} />
+      )}
+
+      {image && !isLoading && <Modal img={image} alt={alt} onClose={onClose} />}
+      {images.length !== 0 && !isLoading && <Button onClick={loadMore} />}
+    </div>
+  );
 }
