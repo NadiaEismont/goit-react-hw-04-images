@@ -15,10 +15,11 @@ export function App() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
+    const controller = new AbortController();
     async function fetchData() {
       try {
         setIsLoading(true);
-        const photos = await fetchImages(search, page);
+        const photos = await fetchImages(search, page, controller);
         setImages([...images, ...photos]);
       } catch (error) {
         setError('Сталась помилка. Перезавантажте сторінку');
@@ -27,6 +28,9 @@ export function App() {
       }
     }
     fetchData();
+    return () => {
+      controller.abort();
+    };
   }, [page, search]);
 
   const loadMore = () => {
