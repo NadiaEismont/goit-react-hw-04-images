@@ -1,4 +1,3 @@
-import '../../styles.css';
 import PropTypes from 'prop-types';
 const ImageGalleryItem = ({
   largeImageURL,
